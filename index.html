@@ -3,79 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ремонт и строительные работы Донецк. Макеивка</title>
+<title>Strobistro — Строительная компания</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:#f9f9f9;color:#222;line-height:1.6;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;}
+body{background:#f8f9fa;color:#212529;line-height:1.6;background:linear-gradient(to bottom,#f8f9fa,#e9ecef);}
 
 /* Шапка */
-header{background:#0a2647;color:#fff;padding:20px 0;position:fixed;width:100%;z-index:1000;box-shadow:0 4px 15px rgba(0,0,0,0.2);}
-.container{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;}
-.logo{font-size:28px;font-weight:bold;color:#ffd700;}
-nav a{color:#fff;margin-left:30px;text-decoration:none;font-weight:600;}
+header{
+    position:fixed;top:0;width:100%;background:#1a1a2e;color:#fff;padding:18px 0;z-index:1000;
+    box-shadow:0 4px 15px rgba(0,0,0,0.15);backdrop-filter:blur(10px);
+}
+.container{max-width:1300px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.logo{font-size:26px;font-weight:800;color:#ffd700;letter-spacing:1px;}
+nav a{color:#fff;margin:0 15px;text-decoration:none;font-weight:600;font-size:15px;transition:.3s;}
 nav a:hover{color:#ffd700;}
 
 /* Герой */
-.hero{height:100vh;background:linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url('https://images.unsplash.com/photo-1503387762-592deb58ef4e') center/cover;display:flex;align-items:center;text-align:center;color:#fff;}
-.hero h1{font-size:58px;margin-bottom:20px;}
-.hero p{font-size:24px;}
+.hero{
+    height:100vh;min-height:600px;
+    background:linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.75)),
+               url('https://images.unsplash.com/photo-1503387762-592deb58ef4e') center/cover no-repeat;
+    display:flex;align-items:center;text-align:center;color:#fff;padding-top:80px;
+}
+.hero h1{font-size:48px;font-weight:800;margin-bottom:16px;}
+.hero p{font-size:20px;font-weight:300;opacity:0.9;}
 
 /* Секции */
-section{padding:100px 0;}
-h2{font-size:42px;text-align:center;margin-bottom:60px;color:#0a2647;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:35px;}
-.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1);transition:0.4s;}
-.card:hover{transform:translateY(-12px);}
-.card img{width:100%;height:260px;object-fit:cover;}
-.card-body{padding:25px;}
-.card h3{font-size:24px;color:#0a2647;margin-bottom:12px;}
-.salary{color:#0a2647;font-weight:bold;font-size:18px;}
-.btn{background:#ffd700;color:#000;padding:12px 28px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;}
-.btn:hover{background:#ffed4e;}
+section{padding:100px 20px;}
+h2{font-size:38px;text-align:center;margin-bottom:60px;color:#1a1a2e;font-weight:700;}
+.grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;
+    max-width:1300px;margin:0 auto;
+}
+.card{
+    background:#fff;border-radius:16px;overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);transition:.4s;
+}
+.card:hover{transform:translateY(-12px);box-shadow:0 20px 40px rgba(0,0,0,0.15);}
+.card img{width:100%;height:240px;object-fit:cover;}
+.card-body{padding:24px;}
+.card h3{font-size:22px;color:#1a1a2e;margin-bottom:10px;font-weight:600;}
+.salary{color:#ffd700;font-weight:700;font-size:19px;margin:8px 0;}
+.btn{
+    background:#ffd700;color:#000;padding:12px 28px;border:none;border-radius:50px;
+    font-weight:700;cursor:pointer;transition:.3s;display:inline-block;margin-top:12px;
+}
+.btn:hover{background:#ffed4e;transform:translateY(-3px);}
 
-/* Админ-панель */
-#admin{display:none;background:#111;color:#fff;min-height:100vh;padding-top:120px;}
-.admin-wrap{max-width:1100px;margin:0 auto;padding:20px;}
-.tabs button{background:#333;color:#fff;padding:15px 25px;margin:0 5px 20px;border:none;border-radius:8px;cursor:pointer;font-size:16px;}
-.tabs button.active{background:#ffd700;color:#000;}
-.form{background:#222;padding:30px;border-radius:12px;margin-bottom:40px;}
-input,textarea{width:100%;padding:14px;margin:10px 0;border:none;border-radius:8px;font-size:16px;}
-button.save{background:#ffd700;color:#000;padding:14px 30px;border:none;border-radius:8px;cursor:pointer;font-weight:bold;}
-button.save:hover{background:#ffed4e;}
-table{width:100%;border-collapse:collapse;margin-top:20px;}
-th,td{padding:15px;background:#222;text-align:left;border-bottom:1px solid #444;}
-th{background:#ffd700;color:#000;}
-.del{background:#e74c3c;color:#fff;padding:8px 15px;border:none;border-radius:5px;cursor:pointer;}
+/* Админка */
+#admin{display:none;background:#0f0f1a;color:#e0e0e0;min-height:100vh;padding:100px 20px 50px;}
+.admin-wrap{max-width:900px;margin:0 auto;background:#1a1a2e;padding:30px;border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.4);}
+#admin h1{font-size:32px;text-align:center;color:#ffd700;margin-bottom:30px;}
+.tabs{text-align:center;margin-bottom:30px;}
+.tabs button{background:#334;color:#fff;padding:12px 24px;margin:5px;border:none;border-radius:50px;font-size:16px;cursor:pointer;transition:.3s;}
+.tabs button.active,.tabs button:hover{background:#ffd700;color:#000;font-weight:700;}
+.form{background:#223;padding:28px;border-radius:16px;margin-bottom:30px;display:none;}
+.form.active{display:block;}
+.form h2{color:#ffd700;margin-bottom:20px;font-size:24px;}
+input,textarea,select{
+    width:100%;padding:14px;margin:12px 0;border:none;border-radius:12px;background:#334;color:#fff;font-size:16px;
+}
+#imgPreview{max-width:100%;margin:15px 0;border-radius:12px;display:none;box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+button.save{background:#ffd700;color:#000;padding:14px 32px;border:none;border-radius:50px;font-weight:700;cursor:pointer;margin-top:10px;}
+table{width:100%;margin-top:20px;border-collapse:collapse;background:#223;border-radius:12px;overflow:hidden;}
+th{background:#ffd700;color:#000;padding:16px;font-weight:600;}
+td{padding:14px;background:#223;border-bottom:1px solid #445;}
+.del{background:#e74c3c;color:#fff;padding:8px 16px;border:none;border-radius:50px;cursor:pointer;font-weight:600;}
 
-footer{background:#0a2647;color:#fff;text-align:center;padding:40px 0;}
+/* Адаптив */
+@media(max-width:768px){
+    .hero h1{font-size:36px;}
+    .hero p{font-size:18px;}
+    nav{flex-wrap:wrap;justify-content:center;margin-top:10px;}
+    nav a{margin:8px 12px;font-size:14px;}
+    h2{font-size:32px;}
+    .admin-wrap{padding:20px;}
+}
 </style>
 </head>
 <body>
 
 <header>
   <div class="container">
+    <div class="logo">Strobistro</div>
     <nav>
       <a href="#works">Работы</a>
       <a href="#vacancies">Вакансии</a>
-      <a href="#" onclick="openAdmin()">Админ-панель</a>
+      <a href="#" onclick="openAdmin()">Админка</a>
     </nav>
   </div>
 </header>
 
 <div class="hero">
   <div class="container">
-    <h1>Строим качественно и в срок</h1>
-    <p>Жилые дома • Коммерческие объекты • Инфраструктура</p>
+    <h1>Strobistro</h1>
+    <p>Строим быстро. Строим надёжно.</p>
   </div>
 </div>
 
-<main class="container">
+<main>
   <section id="works">
     <h2>Выполненные объекты</h2>
     <div class="grid" id="worksGrid"></div>
   </section>
 
-  <section id="vacancies" style="background:#f4f4f4;">
+  <section id="vacancies" style="background:#f1f3f5;">
     <h2>Открытые вакансии</h2>
     <div class="grid" id="vacanciesGrid"></div>
   </section>
@@ -84,60 +116,57 @@ footer{background:#0a2647;color:#fff;text-align:center;padding:40px 0;}
 <!-- АДМИН-ПАНЕЛЬ -->
 <div id="admin">
   <div class="admin-wrap">
-    <h1 style="text-align:center;margin-bottom:30px;color:#ffd700;">Админ-панель</h1>
+    <h1>Админ-панель Strobistro</h1>
     <div class="tabs">
       <button class="active" onclick="tab('work')">Добавить работу</button>
       <button onclick="tab('vacancy')">Добавить вакансию</button>
       <button onclick="location.reload()">Выйти</button>
     </div>
 
-    <!-- Форма работы -->
     <div id="work" class="form active">
       <h2>Новый объект</h2>
       <input type="text" id="wTitle" placeholder="Название объекта" required>
       <input type="text" id="wDesc" placeholder="Город, год, описание" required>
-      <input type="url" id="wImg" placeholder="Ссылка на фото" required>
-      <button class="save" onclick="addWork()">Добавить работу</button>
+      <input type="file" id="wFile" accept="image/*">
+      <img id="imgPreview" alt="Превью">
+      <button class="save" onclick="addWork()">Добавить объект</button>
     </div>
 
-    <!-- Форма вакансии -->
     <div id="vacancy" class="form">
       <h2>Новая вакансия</h2>
       <input type="text" id="vTitle" placeholder="Должность" required>
       <input type="text" id="vSalary" placeholder="Зарплата (от 120 000 ₽)" required>
-      <textarea id="vReq" rows="4" placeholder="Требования и условия"></textarea>
+      <textarea id="vReq" rows="5" placeholder="Требования, график, условия"></textarea>
       <button class="save" onclick="addVacancy()">Добавить вакансию</button>
     </div>
 
-    <h2 style="margin-top:50px;">Управление контентом</h2>
-    <h3>Работы</h3>
+    <h2 style="color:#ffd700;margin:40px 0 20px;">Управление</h2>
+    <h3 style="color:#ffd700;">Объекты</h3>
     <table id="worksTable"><tr><th>Название</th><th>Удалить</th></tr></table>
 
-    <h3 style="margin-top:30px;">Вакансии</h3>
-    <table id="vacTable"><tr><th>Должность</th><th>Удалить</th></tr></table>
+    <h3 style="color:#ffd700;margin-top:30px;">Вакансии</h3>
+    <table id="vacTable"><tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr></table>
   </div>
 </div>
 
-<footer>
+<footer style="background:#1a1a2e;color:#aaa;text-align:center;padding:40px 20px;margin-top:80px;">
   <div class="container">
-    <p>&copy; Контакты +79490359707 Миранда Владимир    +79493263607 Кацай Владимирович</p>
-
+    <p>© 2025 Strobistro — Строительство будущего. +7 (495) 777-88-99</p>
   </div>
 </footer>
 
 <script>
-// Пароль
+// Пароль: admin2025
 function openAdmin(){
-  if(prompt("Пароль админа:")==="admin2025"){
+  if(prompt("Пароль администратора:")==="admin2025"){
     document.getElementById("admin").style.display="block";
     document.querySelector("header").style.display="none";
     document.querySelector("main").style.display="none";
     document.querySelector("footer").style.display="none";
     loadData();
-  } else alert("Неправильно");
+  } else alert("Неверный пароль");
 }
 
-// Табы
 function tab(id){
   document.querySelectorAll(".form").forEach(f=>f.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -145,106 +174,98 @@ function tab(id){
   event.target.classList.add("active");
 }
 
-// Данные
-let works = JSON.parse(localStorage.getItem("works")) || [];
-let vacancies = JSON.parse(localStorage.getItem("vacancies")) || [];
+let works = JSON.parse(localStorage.getItem("strobistro_works")) || [];
+let vacancies = JSON.parse(localStorage.getItem("strobistro_vacancies")) || [];
 
-// Добавление
+// Превью фото
+document.getElementById("wFile").addEventListener("change", function(e){
+  const file = e.target.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const prev = document.getElementById("imgPreview");
+      prev.src = e.target.result;
+      prev.style.display = "block";
+    }
+    reader.readAsDataURL(file);
+  }
+});
+
 function addWork(){
-  const w = {
-    title: document.getElementById("wTitle").value,
-    desc: document.getElementById("wDesc").value,
-    img: document.getElementById("wImg").value
-  };
-  works.push(w);
-  localStorage.setItem("works", JSON.stringify(works));
-  renderWorks(); renderTableWorks();
-  document.getElementById("wTitle").value="";
-  document.getElementById("wDesc").value="";
-  document.getElementById("wImg").value="";
-  alert("Работа добавлена");
+  const title = document.getElementById("wTitle").value.trim();
+  const desc = document.getElementById("wDesc").value.trim();
+  const fileInput = document.getElementById("wFile");
+  if(!title || !desc || !fileInput.files[0]) return alert("Заполните все поля и выберите фото");
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const work = {title, desc, img: e.target.result};
+    works.push(work);
+    localStorage.setItem("strobistro_works", JSON.stringify(works));
+    renderWorks(); renderTableWorks();
+    document.getElementById("wTitle").value = document.getElementById("wDesc").value = "";
+    fileInput.value = ""; document.getElementById("imgPreview").style.display = "none";
+    alert("Объект добавлен!");
+  }
+  reader.readAsDataURL(fileInput.files[0]);
 }
 
 function addVacancy(){
   const v = {
-    title: document.getElementById("vTitle").value,
-    salary: document.getElementById("vSalary").value,
-    req: document.getElementById("vReq").value
+    title: document.getElementById("vTitle").value.trim(),
+    salary: document.getElementById("vSalary").value.trim(),
+    req: document.getElementById("vReq").value.trim()
   };
+  if(!v.title || !v.salary) return alert("Заполните должность и зарплату");
   vacancies.push(v);
-  localStorage.setItem("vacancies", JSON.stringify(vacancies));
+  localStorage.setItem("strobistro_vacancies", JSON.stringify(vacancies));
   renderVacancies(); renderTableVac();
-  document.getElementById("vTitle").value="";
-  document.getElementById("vSalary").value="";
-  document.getElementById("vReq").value="";
+  document.getElementById("vTitle").value = document.getElementById("vSalary").value = document.getElementById("vReq").value = "";
   alert("Вакансия добавлена");
 }
 
-// Удаление
-function delWork(i){
-  if(confirm("Удалить?")){
-    works.splice(i,1);
-    localStorage.setItem("works", JSON.stringify(works));
-    renderWorks(); renderTableWorks();
-  }
-}
-function delVac(i){
-  if(confirm("Удалить?")){
-    vacancies.splice(i,1);
-    localStorage.setItem("vacancies", JSON.stringify(vacancies));
-    renderVacancies(); renderTableVac();
-  }
-}
+function delWork(i){ if(confirm("Удалить объект?")){ works.splice(i,1); localStorage.setItem("strobistro_works", JSON.stringify(works)); renderWorks(); renderTableWorks(); } }
+function delVac(i){ if(confirm("Удалить вакансию?")){ vacancies.splice(i,1); localStorage.setItem("strobistro_vacancies", JSON.stringify(vacancies)); renderVacancies(); renderTableVac(); } }
 
-// Рендер
 function renderWorks(){
-  const grid = document.getElementById("worksGrid");
-  grid.innerHTML = "";
-  works.forEach(w=>{
-    grid.innerHTML += `<div class="card">
+  document.getElementById("worksGrid").innerHTML = works.map(w=>`
+    <div class="card">
       <img src="${w.img}" alt="${w.title}">
       <div class="card-body">
         <h3>${w.title}</h3>
         <p>${w.desc}</p>
       </div>
-    </div>`;
-  });
+    </div>`).join("");
 }
+
 function renderVacancies(){
-  const grid = document.getElementById("vacanciesGrid");
-  grid.innerHTML = "";
-  vacancies.forEach(v=>{
-    grid.innerHTML += `<div class="card">
+  document.getElementById("vacanciesGrid").innerHTML = vacancies.map(v=>`
+    <div class="card">
       <div class="card-body">
         <h3>${v.title}</h3>
         <p class="salary">${v.salary}</p>
-        <p>${v.req}</p>
-        <button class="btn" onclick="alert('Резюме отправлено!')">Откликнуться</button>
+        <p>${v.req || "Подробности при собеседовании"}</p>
+        <button class="btn" onclick="alert('Резюме отправлено на hr@strobistro.ru')">Откликнуться</button>
       </div>
-    </div>`;
-  });
+    </div>`).join("");
 }
+
 function renderTableWorks(){
   const t = document.getElementById("worksTable");
   t.innerHTML = "<tr><th>Название</th><th>Удалить</th></tr>";
   works.forEach((w,i)=> t.innerHTML += `<tr><td>${w.title}</td><td><button class="del" onclick="delWork(${i})">Удалить</button></td></tr>`);
 }
+
 function renderTableVac(){
   const t = document.getElementById("vacTable");
-  t.innerHTML = "<tr><th>Должность</th><th>Удалить</th></tr>";
-  vacancies.forEach((v,i)=> t.innerHTML += `<tr><td>${v.title}</td><td><button class="del" onclick="delVac(${i})">Удалить</button></td></tr>`);
+  t.innerHTML = "<tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr>";
+  vacancies.forEach((v,i)=> t.innerHTML += `<tr><td>${v.title}</td><td>${v.salary}</td><td><button class="del" onclick="delVac(${i})">Удалить</button></td></tr>`);
 }
 
-function loadData(){
-  renderWorks();
-  renderVacancies();
-  renderTableWorks();
-  renderTableVac();
-}
+function loadData(){ renderWorks(); renderVacancies(); renderTableWorks(); renderTableVac(); }
 
-// Старт
-renderWorks();
-renderVacancies();
+// Запуск
+renderWorks(); renderVacancies();
 </script>
 </body>
 </html>
