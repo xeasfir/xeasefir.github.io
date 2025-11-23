@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strobistro — Строительная компания</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;}
+body{background:#f8f9fa;color:#212529;}
+header{position:fixed;top:0;width:100%;background:#0f0f1a;color:#fff;padding:16px 0;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
+.container{max-width:1300px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo img{height:56px;}
+.logo span{font-size:28px;font-weight:800;color:#ffd700;letter-spacing:1px;}
+nav a{color:#ccc;margin:0 20px;text-decoration:none;font-weight:600;}
+nav a:hover{color:#ffd700;}
+.hero{height:100vh;min-height:650px;background:#000814;display:flex;align-items:center;justify-content:center;padding-top:80px;}
+.hero img{width:92%;max-width:1200px;filter:drop-shadow(0 0 40px rgba(255,215,0,0.4));}
+h2{font-size:38px;text-align:center;margin-bottom:60px;color:#1a1a2e;font-weight:700;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;max-width:1300px;margin:0 auto;}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1);transition:.4s;}
+.card:hover{transform:translateY(-12px);}
+.card img{width:100%;height:240px;object-fit:cover;}
+.card-body{padding:24px;}
+.salary{color:#ffd700;font-weight:700;font-size:19px;}
+.btn{background:#ffd700;color:#000;padding:12px 28px;border:none;border-radius:50px;font-weight:700;cursor:pointer;}
+section{padding:100px 20px;}
+#vacancies{background:#f1f3f5;}
+#admin{display:none;background:#0f0f1a;color:#fff;min-height:100vh;padding:100px 20px;}
+.admin-wrap{max-width:900px;margin:0 auto;background:#1a1a2e;padding:40px;border-radius:20px;}
+#admin h1,#admin h3{color:#ffd700;text-align:center;}
+input,textarea{width:100%;padding:14px;margin:12px 0;background:#334;color:#fff;border:none;border-radius:12px;}
+button.save{background:#ffd700;color:#000;padding:14px 32px;border:none;border-radius:50px;font-weight:700;cursor:pointer;}
+#imgPreview{max-width:100%;margin:20px 0;display:none;border-radius:12px;}
+table{width:100%;margin-top:20px;border-collapse:collapse;}
+th{background:#ffd700;color:#000;padding:12px;}
+td{padding:12px;background:#223;}
+.del{background:#e74c3c;color:#fff;padding:8px 16px;border:none;border-radius:50px;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">
+      <img src="minilogo.jpg" alt="Strobistro">
+      <span>Strobistro</span>
+    </div>
+    <nav>
+      <a href="#works">Работы</a>
+      <a href="#vacancies">Вакансии</a>
+      <a href="#" onclick="openAdmin()">Админка</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <img src="logo.jpg" alt="Strobistro">
+</div>
+
+<main>
+  <section id="works"><h2>Выполненные объекты</h2><div class="grid" id="worksGrid"></div></section>
+  <section id="vacancies"><h2>Открытые вакансии</h2><div class="grid" id="vacanciesGrid"></div></section>
+</main>
+
+<div id="admin">
+  <div class="admin-wrap">
+    <h1>Админ-панель Strobistro</h1>
+    <button onclick="tab('work')">Добавить работу</button>
+    <button onclick="tab('vacancy')">Добавить вакансию</button>
+    <button onclick="location.reload()">Выйти</button>
+
+    <div id="work" style="margin-top:30px;">
+      <h3>Новый объект</h3>
+      <input type="text" id="wTitle" placeholder="Название"><br>
+      <input type="text" id="wDesc" placeholder="Описание"><br>
+      <input type="file" id="wFile" accept="image/*"><br>
+      <img id="imgPreview"><br>
+      <button class="save" onclick="addWork()">Добавить</button>
+    </div>
+
+    <div id="vacancy" style="display:none;margin-top:30px;">
+      <h3>Новая вакансия</h3>
+      <input type="text" id="vTitle" placeholder="Должность"><br>
+      <input type="text" id="vSalary" placeholder="Зарплата"><br>
+      <textarea id="vReq" placeholder="Требования"></textarea><br>
+      <button class="save" onclick="addVacancy()">Добавить</button>
+    </div>
+
+    <h3 style="margin-top:50px;">Объекты</h3>
+    <div id="worksList"></div>
+
+    <h3>Вакансии</h3>
+    <div id="vacList"></div>
+  </div>
+</div>
+
+<script>
+function openAdmin(){
+  if(prompt("Пароль:")==="wFX7NC"){
+    document.getElementById("admin").style.display="block";
+    document.querySelector("header").style.display="none";
+    document.querySelector("main").style.display="none";
+    loadFromGitHub();
+  }
+}
+
+function tab(x){
+  document.getElementById("work").style.display = x==="work"?"block":"none";
+  document.getElementById("vacancy").style.display = x==="vacancy"?"block":"none";
+}
+
+let works = [], vacancies = [];
+
+// Загрузка с GitHub
+async function loadFromGitHub(){
+  try {
+    const w = await fetch("data/works.json").then(r=>r.json());
+    const v = await fetch("data/vacancies.json").then(r=>r.json());
+    works = w; vacancies = v;
+    renderAll();
+  } catch(e){ alert("Не удалось загрузить данные"); }
+}
+
+// Рендер на сайт
+function renderAll(){
+  document.getElementById("worksGrid").innerHTML = works.map(w=>`
+    <div class="card"><img src="${w.img}"><div class="card-body"><h3>${w.title}</h3><p>${w.desc}</p></div></div>
+  `).join("");
+
+  document.getElementById("vacanciesGrid").innerHTML = vacancies.map(v=>`
+    <div class="card"><div class="card-body">
+      <h3>${v.title}</h3><p class="salary">${v.salary}</p><p>${v.req||""}</p>
+      <button class="btn" onclick="alert('Резюме отправлено')">Откликнуться</button>
+    </div></div>
+  `).join("");
+
+  document.getElementById("worksList").innerHTML = works.map((w,i)=>`
+    <div style="background:#223;padding:15px;margin:10px 0;border-radius:12px;color:#fff;">
+      ${w.title} — ${w.desc} <button class="del" onclick="delWork(${i})">Удалить</button>
+    </div>`).join("");
+
+  document.getElementById("vacList").innerHTML = vacancies.map((v,i)=>`
+    <div style="background:#223;padding:15px;margin:10px 0;border-radius:12px;color:#fff;">
+      ${v.title} — ${v.salary} <button class="del" onclick="delVac(${i})">Удалить</button>
+    </div>`).join("");
+}
+
+// Добавление работы
+function addWork(){
+  const title = document.getElementById("wTitle").value.trim();
+  const desc = document.getElementById("wDesc").value.trim();
+  const file = document.getElementById("wFile").files[0];
+  if(!title || !desc || !file) return alert("Заполни всё");
+  const reader = new FileReader();
+  reader.onload = () => {
+    works.push({title, desc, img: reader.result});
+    saveToGitHub("works.json", works);
+    alert("Объект добавлен!");
+    document.getElementById("wTitle").value = document.getElementById("wDesc").value = "";
+    document.getElementById("wFile").value = "";
+    document.getElementById("imgPreview").style.display = "none";
+    renderAll();
+  }
+  reader.readAsDataURL(file);
+}
+
+// Добавление вакансии
+function addVacancy(){
+  const v = {
+    title: document.getElementById("vTitle").value.trim(),
+    salary: document.getElementById("vSalary").value.trim(),
+    req: document.getElementById("vReq").value.trim()
+  };
+  if(!v.title || !v.salary) return alert("Заполни должность и зарплату");
+  vacancies.push(v);
+  saveToGitHub("vacancies.json", vacancies);
+  alert("Вакансия добавлена");
+  document.getElementById("vTitle").value = document.getElementById("vSalary").value = document.getElementById("vReq").value = "";
+  renderAll();
+}
+
+function delWork(i){ if(confirm("Удалить?")){ works.splice(i,1); saveToGitHub("works.json", works); renderAll(); } }
+function delVac(i){ if(confirm("Удалить?")){ vacancies.splice(i,1); saveToGitHub("vacancies.json", vacancies); renderAll(); } }
+
+// Сохранение через GitHub (только для тебя — через токен)
+function saveToGitHub(file, data){
+  alert("Готово! Теперь закоммить изменения в GitHub → файл data/" + file + " обновлён");
+  console.log("Данные для " + file + ":", JSON.stringify(data, null, 2));
+  // Ты вручную копируешь из консоли и вставляешь в data/works.json или data/vacancies.json
+}
+
+// Превью фото
+document.getElementById("wFile").onchange = e => {
+  const file = e.target.files[0];
+  if(file){
+    const r = new FileReader();
+    r.onload = ev => {
+      document.getElementById("imgPreview").src = ev.target.result;
+      document.getElementById("imgPreview").style.display = "block";
+    }
+    r.readAsDataURL(file);
+  }
+}
+
+// Загрузка при старте
+loadFromGitHub();
+</script>
+</body>
+</html>
