@@ -1,35 +1,250 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://minotar.net/helm/ol_dow/32.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>СтройГарант — Строительная компания</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#f9f9f9;color:#222;line-height:1.6;}
+
+/* Шапка */
+header{background:#0a2647;color:#fff;padding:20px 0;position:fixed;width:100%;z-index:1000;box-shadow:0 4px 15px rgba(0,0,0,0.2);}
+.container{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:28px;font-weight:bold;color:#ffd700;}
+nav a{color:#fff;margin-left:30px;text-decoration:none;font-weight:600;}
+nav a:hover{color:#ffd700;}
+
+/* Герой */
+.hero{height:100vh;background:linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url('https://images.unsplash.com/photo-1503387762-592deb58ef4e') center/cover;display:flex;align-items:center;text-align:center;color:#fff;}
+.hero h1{font-size:58px;margin-bottom:20px;}
+.hero p{font-size:24px;}
+
+/* Секции */
+section{padding:100px 0;}
+h2{font-size:42px;text-align:center;margin-bottom:60px;color:#0a2647;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:35px;}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1);transition:0.4s;}
+.card:hover{transform:translateY(-12px);}
+.card img{width:100%;height:260px;object-fit:cover;}
+.card-body{padding:25px;}
+.card h3{font-size:24px;color:#0a2647;margin-bottom:12px;}
+.salary{color:#0a2647;font-weight:bold;font-size:18px;}
+.btn{background:#ffd700;color:#000;padding:12px 28px;border:none;border-radius:6px;font-weight:bold;cursor:pointer;}
+.btn:hover{background:#ffed4e;}
+
+/* Админ-панель */
+#admin{display:none;background:#111;color:#fff;min-height:100vh;padding-top:120px;}
+.admin-wrap{max-width:1100px;margin:0 auto;padding:20px;}
+.tabs button{background:#333;color:#fff;padding:15px 25px;margin:0 5px 20px;border:none;border-radius:8px;cursor:pointer;font-size:16px;}
+.tabs button.active{background:#ffd700;color:#000;}
+.form{background:#222;padding:30px;border-radius:12px;margin-bottom:40px;}
+input,textarea{width:100%;padding:14px;margin:10px 0;border:none;border-radius:8px;font-size:16px;}
+button.save{background:#ffd700;color:#000;padding:14px 30px;border:none;border-radius:8px;cursor:pointer;font-weight:bold;}
+button.save:hover{background:#ffed4e;}
+table{width:100%;border-collapse:collapse;margin-top:20px;}
+th,td{padding:15px;background:#222;text-align:left;border-bottom:1px solid #444;}
+th{background:#ffd700;color:#000;}
+.del{background:#e74c3c;color:#fff;padding:8px 15px;border:none;border-radius:5px;cursor:pointer;}
+
+footer{background:#0a2647;color:#fff;text-align:center;padding:40px 0;}
+</style>
 </head>
 <body>
-  <div class="video-container">
-    <video id="background-video" autoplay muted loop>
-      <source src="https://r2.guns.lol/5d6bda2f-0321-4249-a984-4b0758efff15.mp4" type="video/mp4">
-      Ваш браузер не поддерживает видео.
-    </video>
+
+<header>
+  <div class="container">
+    <div class="logo">СтройГарант</div>
+    <nav>
+      <a href="#works">Работы</a>
+      <a href="#vacancies">Вакансии</a>
+      <a href="#" onclick="openAdmin()">Админ-панель</a>
+    </nav>
   </div>
-  <div class="bio-container">
-    <img src="https://minotar.net/helm/ol_dow/150.png" alt="Avatar" class="avatar">
-    <div class="name">ol_dow</div>
-    <div class="description">максим терорист</div>
-    <div class="social-buttons">
-      <a href="https://discord.com/users/840624482866823169" class="social-button">
-        <img src="https://img.icons8.com/color/48/000000/discord-logo.png" alt="Discord">
-      </a>
-      <a href="https://t.me/ol_dow" class="social-button">
-        <img src="https://img.icons8.com/color/48/000000/telegram-app.png" alt="Telegram">
-      </a>
-      <a href="https://vk.com/ol_dow" class="social-button">
-        <img src="https://img.icons8.com/color/48/000000/vk-com.png" alt="VK">
-      </a>
+</header>
+
+<div class="hero">
+  <div class="container">
+    <h1>Строим качественно и в срок</h1>
+    <p>Жилые дома • Коммерческие объекты • Инфраструктура</p>
+  </div>
+</div>
+
+<main class="container">
+  <section id="works">
+    <h2>Выполненные объекты</h2>
+    <div class="grid" id="worksGrid"></div>
+  </section>
+
+  <section id="vacancies" style="background:#f4f4f4;">
+    <h2>Открытые вакансии</h2>
+    <div class="grid" id="vacanciesGrid"></div>
+  </section>
+</main>
+
+<!-- АДМИН-ПАНЕЛЬ -->
+<div id="admin">
+  <div class="admin-wrap">
+    <h1 style="text-align:center;margin-bottom:30px;color:#ffd700;">Админ-панель</h1>
+    <div class="tabs">
+      <button class="active" onclick="tab('work')">Добавить работу</button>
+      <button onclick="tab('vacancy')">Добавить вакансию</button>
+      <button onclick="location.reload()">Выйти</button>
     </div>
+
+    <!-- Форма работы -->
+    <div id="work" class="form active">
+      <h2>Новый объект</h2>
+      <input type="text" id="wTitle" placeholder="Название объекта" required>
+      <input type="text" id="wDesc" placeholder="Город, год, описание" required>
+      <input type="url" id="wImg" placeholder="Ссылка на фото" required>
+      <button class="save" onclick="addWork()">Добавить работу</button>
+    </div>
+
+    <!-- Форма вакансии -->
+    <div id="vacancy" class="form">
+      <h2>Новая вакансия</h2>
+      <input type="text" id="vTitle" placeholder="Должность" required>
+      <input type="text" id="vSalary" placeholder="Зарплата (от 120 000 ₽)" required>
+      <textarea id="vReq" rows="4" placeholder="Требования и условия"></textarea>
+      <button class="save" onclick="addVacancy()">Добавить вакансию</button>
+    </div>
+
+    <h2 style="margin-top:50px;">Управление контентом</h2>
+    <h3>Работы</h3>
+    <table id="worksTable"><tr><th>Название</th><th>Удалить</th></tr></table>
+
+    <h3 style="margin-top:30px;">Вакансии</h3>
+    <table id="vacTable"><tr><th>Должность</th><th>Удалить</th></tr></table>
   </div>
-    <script src="script.js"></script>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 СтройГарант | +7 (495) 123-45-67</p>
+  </div>
+</footer>
+
+<script>
+// Пароль
+function openAdmin(){
+  if(prompt("Пароль админа:")==="admin2025"){
+    document.getElementById("admin").style.display="block";
+    document.querySelector("header").style.display="none";
+    document.querySelector("main").style.display="none";
+    document.querySelector("footer").style.display="none";
+    loadData();
+  } else alert("Неправильно");
+}
+
+// Табы
+function tab(id){
+  document.querySelectorAll(".form").forEach(f=>f.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+}
+
+// Данные
+let works = JSON.parse(localStorage.getItem("works")) || [];
+let vacancies = JSON.parse(localStorage.getItem("vacancies")) || [];
+
+// Добавление
+function addWork(){
+  const w = {
+    title: document.getElementById("wTitle").value,
+    desc: document.getElementById("wDesc").value,
+    img: document.getElementById("wImg").value
+  };
+  works.push(w);
+  localStorage.setItem("works", JSON.stringify(works));
+  renderWorks(); renderTableWorks();
+  document.getElementById("wTitle").value="";
+  document.getElementById("wDesc").value="";
+  document.getElementById("wImg").value="";
+  alert("Работа добавлена");
+}
+
+function addVacancy(){
+  const v = {
+    title: document.getElementById("vTitle").value,
+    salary: document.getElementById("vSalary").value,
+    req: document.getElementById("vReq").value
+  };
+  vacancies.push(v);
+  localStorage.setItem("vacancies", JSON.stringify(vacancies));
+  renderVacancies(); renderTableVac();
+  document.getElementById("vTitle").value="";
+  document.getElementById("vSalary").value="";
+  document.getElementById("vReq").value="";
+  alert("Вакансия добавлена");
+}
+
+// Удаление
+function delWork(i){
+  if(confirm("Удалить?")){
+    works.splice(i,1);
+    localStorage.setItem("works", JSON.stringify(works));
+    renderWorks(); renderTableWorks();
+  }
+}
+function delVac(i){
+  if(confirm("Удалить?")){
+    vacancies.splice(i,1);
+    localStorage.setItem("vacancies", JSON.stringify(vacancies));
+    renderVacancies(); renderTableVac();
+  }
+}
+
+// Рендер
+function renderWorks(){
+  const grid = document.getElementById("worksGrid");
+  grid.innerHTML = "";
+  works.forEach(w=>{
+    grid.innerHTML += `<div class="card">
+      <img src="${w.img}" alt="${w.title}">
+      <div class="card-body">
+        <h3>${w.title}</h3>
+        <p>${w.desc}</p>
+      </div>
+    </div>`;
+  });
+}
+function renderVacancies(){
+  const grid = document.getElementById("vacanciesGrid");
+  grid.innerHTML = "";
+  vacancies.forEach(v=>{
+    grid.innerHTML += `<div class="card">
+      <div class="card-body">
+        <h3>${v.title}</h3>
+        <p class="salary">${v.salary}</p>
+        <p>${v.req}</p>
+        <button class="btn" onclick="alert('Резюме отправлено!')">Откликнуться</button>
+      </div>
+    </div>`;
+  });
+}
+function renderTableWorks(){
+  const t = document.getElementById("worksTable");
+  t.innerHTML = "<tr><th>Название</th><th>Удалить</th></tr>";
+  works.forEach((w,i)=> t.innerHTML += `<tr><td>${w.title}</td><td><button class="del" onclick="delWork(${i})">Удалить</button></td></tr>`);
+}
+function renderTableVac(){
+  const t = document.getElementById("vacTable");
+  t.innerHTML = "<tr><th>Должность</th><th>Удалить</th></tr>";
+  vacancies.forEach((v,i)=> t.innerHTML += `<tr><td>${v.title}</td><td><button class="del" onclick="delVac(${i})">Удалить</button></td></tr>`);
+}
+
+function loadData(){
+  renderWorks();
+  renderVacancies();
+  renderTableWorks();
+  renderTableVac();
+}
+
+// Старт
+renderWorks();
+renderVacancies();
+</script>
 </body>
 </html>
