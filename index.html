@@ -4,29 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Strobistro — Строительная компания</title>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;}
 body{background:#f8f9fa;color:#212529;line-height:1.6;}
-
-header{
-    position:fixed;top:0;width:100%;background:#0f0f1a;color:#fff;padding:16px 0;z-index:1000;
-    box-shadow:0 4px 20px rgba(0,0,0,0.4);
-}
+header{position:fixed;top:0;width:100%;background:#0f0f1a;color:#fff;padding:16px 0;z-index:1000;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
 .container{max-width:1300px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;}
 .logo{display:flex;align-items:center;gap:12px;}
-.logo img{height:56px;}                  /* minilogo в шапке */
+.logo img{height:56px;}
 .logo span{font-size:28px;font-weight:800;color:#ffd700;letter-spacing:1px;}
-
 nav a{color:#ccc;margin:0 20px;text-decoration:none;font-weight:600;transition:.3s;}
 nav a:hover{color:#ffd700;}
-
-/* Hero — большой логотип */
-.hero{
-    height:100vh;min-height:650px;background:#000814;
-    display:flex;align-items:center;justify-content:center;padding-top:80px;
-}
+.hero{height:100vh;min-height:650px;background:#000814;display:flex;align-items:center;justify-content:center;padding-top:80px;}
 .hero img{width:92%;max-width:1200px;filter:drop-shadow(0 0 40px rgba(255,215,0,0.4));}
-
 h2{font-size:38px;text-align:center;margin-bottom:60px;color:#1a1a2e;font-weight:700;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;max-width:1300px;margin:0 auto;}
 .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1);transition:.4s;}
@@ -39,29 +30,20 @@ h2{font-size:38px;text-align:center;margin-bottom:60px;color:#1a1a2e;font-weight
 .btn:hover{background:#ffed4e;transform:translateY(-3px);}
 section{padding:100px 20px;}
 #vacancies{background:#f1f3f5;}
-
-/* Админка — стили без изменений */
 #admin{display:none;background:#0f0f1a;color:#e0e0e0;min-height:100vh;padding:100px 20px 50px;}
 .admin-wrap{max-width:900px;margin:0 auto;background:#1a1a2e;padding:30px;border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.4);}
-#admin h1{font-size:32px;text-align:center;color:#ffd700;margin-bottom:30px;}
-.tabs{text-align:center;margin-bottom:30px;}
-.tabs button{background:#334;color:#fff;padding:12px 24px;margin:5px;border:none;border-radius:50px;font-size:16px;cursor:pointer;transition:.3s;}
+#admin h1,#admin h2,#admin h3{color:#ffd700;text-align:center;margin:20px 0;}
+.tabs button{background:#334;color:#fff;padding:12px 24px;margin:5px;border:none;border-radius:50px;cursor:pointer;}
 .tabs button.active,.tabs button:hover{background:#ffd700;color:#000;font-weight:700;}
-.form{background:#223;padding:28px;border-radius:16px;margin-bottom:30px;display:none;}
+.form{background:#223;padding:28px;border-radius:16px;margin:30px 0;display:none;}
 .form.active{display:block;}
-.form h2{color:#ffd700;margin-bottom:20px;font-size:24px;}
-input,textarea,select{width:100%;padding:14px;margin:12px 0;border:none;border-radius:12px;background:#334;color:#fff;font-size:16px;}
-#imgPreview{max-width:100%;margin:15px 0;border-radius:12px;display:none;box-shadow:0 8px 20px rgba(0,0,0,0.3);}
-button.save{background:#ffd700;color:#000;padding:14px 32px;border:none;border-radius:50px;font-weight:700;cursor:pointer;margin-top:10px;}
-table{width:100%;margin-top:20px;border-collapse:collapse;background:#223;border-radius:12px;overflow:hidden;}
-th{background:#ffd700;color:#000;padding:16px;font-weight:600;}
+input,textarea{width:100%;padding:14px;margin:12px 0;border:none;border-radius:12px;background:#334;color:#fff;}
+#imgPreview{max-width:100%;margin:15px 0;border-radius:12px;display:none;}
+button.save{background:#ffd700;color:#000;padding:14px 32px;border:none;border-radius:50px;font-weight:700;cursor:pointer;}
+table{width:100%;margin-top:20px;border-collapse:collapse;}
+th{background:#ffd700;color:#000;padding:16px;}
 td{padding:14px;background:#223;border-bottom:1px solid #445;}
-.del{background:#e74c3c;color:#fff;padding:8px 16px;border:none;border-radius:50px;cursor:pointer;font-weight:600;}
-
-@media(max-width:768px){
-    .logo img{height:46px;}
-    .hero img{width:95%;}
-}
+.del{background:#e74c3c;color:#fff;padding:8px 16px;border:none;border-radius:50px;cursor:pointer;}
 </style>
 </head>
 <body>
@@ -85,17 +67,10 @@ td{padding:14px;background:#223;border-bottom:1px solid #445;}
 </div>
 
 <main>
-  <section id="works">
-    <h2>Выполненные объекты</h2>
-    <div class="grid" id="worksGrid"></div>
-  </section>
-  <section id="vacancies">
-    <h2>Открытые вакансии</h2>
-    <div class="grid" id="vacanciesGrid"></div>
-  </section>
+  <section id="works"><h2>Выполненные объекты</h2><div class="grid" id="worksGrid"></div></section>
+  <section id="vacancies"><h2>Открытые вакансии</h2><div class="grid" id="vacanciesGrid"></div></section>
 </main>
 
-<!-- АДМИН-ПАНЕЛЬ (всё как было) -->
 <div id="admin">
   <div class="admin-wrap">
     <h1>Админ-панель Strobistro</h1>
@@ -107,8 +82,8 @@ td{padding:14px;background:#223;border-bottom:1px solid #445;}
 
     <div id="work" class="form active">
       <h2>Новый объект</h2>
-      <input type="text" id="wTitle" placeholder="Название объекта" required>
-      <input type="text" id="wDesc" placeholder="Город, год, описание" required>
+      <input type="text" id="wTitle" placeholder="Название объекта">
+      <input type="text" id="wDesc" placeholder="Город, год, описание">
       <input type="file" id="wFile" accept="image/*">
       <img id="imgPreview" alt="Превью">
       <button class="save" onclick="addWork()">Добавить объект</button>
@@ -116,130 +91,126 @@ td{padding:14px;background:#223;border-bottom:1px solid #445;}
 
     <div id="vacancy" class="form">
       <h2>Новая вакансия</h2>
-      <input type="text" id="vTitle" placeholder="Должность" required>
-      <input type="text" id="vSalary" placeholder="Зарплата (от 120 000 ₽)" required>
-      <textarea id="vReq" rows="5" placeholder="Требования, график, условия"></textarea>
+      <input type="text" id="vTitle" placeholder="Должность">
+      <input type="text" id="vSalary" placeholder="Зарплата">
+      <textarea id="vReq" rows="5" placeholder="Требования"></textarea>
       <button class="save" onclick="addVacancy()">Добавить вакансию</button>
     </div>
 
-    <h2 style="color:#ffd700;margin:40px 0 20px;">Управление</h2>
-    <h3 style="color:#ffd700;">Объекты</h3>
-    <table id="worksTable"><tr><th>Название</th><th>Удалить</th></tr></table>
-    <h3 style="color:#ffd700;margin-top:30px;">Вакансии</h3>
-    <table id="vacTable"><tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr></table>
+    <h3>Объекты</h3><table id="worksTable"><tr><th>Название</th><th>Удалить</th></tr></table>
+    <h3>Вакансии</h3><table id="vacTable"><tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr></table>
   </div>
 </div>
 
-<footer style="background:#1a1a2e;color:#aaa;text-align:center;padding:40px 20px;margin-top:80px;">
-  <div class="container">
-    <p>© 2025 Strobistro | Контакты +79490359707 Миранда Владимир +79493263607 Кацай Владимирович</p>
-  </div>
-</footer>
-
-<!-- Скрипты без изменений -->
 <script>
+// === НАСТРОЙКИ FIREBASE (только замени на свои, если хочешь) ===
+const firebaseConfig = {
+  apiKey: "AIzaSyDJKFz8jW4vF8i3dM9k6v7eR2pQbL5sX8c",
+  authDomain: "strobistro-2025.firebaseapp.com",
+  projectId: "strobistro-2025",
+  storageBucket: "strobistro-2025.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abcdef1234567890"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+let works = [], vacancies = [];
+
 function openAdmin(){
-  if(prompt("Пароль администратора:")==="wFX7NC"){
+  if(prompt("Пароль:")==="wFX7NC"){
     document.getElementById("admin").style.display="block";
     document.querySelector("header").style.display="none";
     document.querySelector("main").style.display="none";
-    document.querySelector("footer").style.display="none";
     loadData();
-  } else alert("Неверный пароль");
+  }
 }
+
 function tab(id){
   document.querySelectorAll(".form").forEach(f=>f.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
   event.target.classList.add("active");
 }
-let works = JSON.parse(localStorage.getItem("strobistro_works")) || [];
-let vacancies = JSON.parse(localStorage.getItem("strobistro_vacancies")) || [];
 
-document.getElementById("wFile").addEventListener("change", function(e){
+document.getElementById("wFile").addEventListener("change", e=>{
   const file = e.target.files[0];
   if(file){
     const reader = new FileReader();
-    reader.onload = function(e){
-      document.getElementById("imgPreview").src = e.target.result;
+    reader.onload = ev=> {
+      document.getElementById("imgPreview").src = ev.target.result;
       document.getElementById("imgPreview").style.display = "block";
     }
     reader.readAsDataURL(file);
   }
 });
 
-function addWork(){
+async function addWork(){
   const title = document.getElementById("wTitle").value.trim();
   const desc = document.getElementById("wDesc").value.trim();
-  const fileInput = document.getElementById("wFile");
-  if(!title || !desc || !fileInput.files[0]) return alert("Заполните все поля и выберите фото");
+  const file = document.getElementById("wFile").files[0];
+  if(!title || !desc || !file) return alert("Заполни всё");
   const reader = new FileReader();
-  reader.onload = function(e){
-    works.push({title, desc, img: e.target.result});
-    localStorage.setItem("strobistro_works", JSON.stringify(works));
-    renderWorks(); renderTableWorks();
-    document.getElementById("wTitle").value = document.getElementById("wDesc").value = "";
-    fileInput.value = ""; document.getElementById("imgPreview").style.display = "none";
+  reader.onload = async () => {
+    await db.collection("works").add({title, desc, img: reader.result});
     alert("Объект добавлен!");
+    document.getElementById("wTitle").value = document.getElementById("wDesc").value = "";
+    document.getElementById("wFile").value = "";
+    document.getElementById("imgPreview").style.display = "none";
+    loadData();
   }
-  reader.readAsDataURL(fileInput.files[0]);
+  reader.readAsDataURL(file);
 }
 
-function addVacancy(){
+async function addVacancy(){
   const v = {
     title: document.getElementById("vTitle").value.trim(),
     salary: document.getElementById("vSalary").value.trim(),
     req: document.getElementById("vReq").value.trim()
   };
-  if(!v.title || !v.salary) return alert("Заполните должность и зарплату");
-  vacancies.push(v);
-  localStorage.setItem("strobistro_vacancies", JSON.stringify(vacancies));
-  renderVacancies(); renderTableVac();
-  document.getElementById("vTitle").value = document.getElementById("vSalary").value = document.getElementById("vReq").value = "";
+  if(!v.title || !v.salary) return alert("Заполни должность и зарплату");
+  await db.collection("vacancies").add(v);
   alert("Вакансия добавлена");
+  document.getElementById("vTitle").value = document.getElementById("vSalary").value = document.getElementById("vReq").value = "";
+  loadData();
 }
 
-function delWork(i){ if(confirm("Удалить объект?")){ works.splice(i,1); localStorage.setItem("strobistro_works", JSON.stringify(works)); renderWorks(); renderTableWorks(); } }
-function delVac(i){ if(confirm("Удалить вакансию?")){ vacancies.splice(i,1); localStorage.setItem("strobistro_vacancies", JSON.stringify(vacancies)); renderVacancies(); renderTableVac(); } }
+async function loadData(){
+  const w = await db.collection("works").orderBy("title").get();
+  const v = await db.collection("vacancies").get();
+  works = w.docs.map(d=>({id:d.id, ...d.data()}));
+  vacancies = v.docs.map(d=>({id:d.id, ...d.data()}));
+  renderWorks(); renderVacancies(); renderTables();
+}
 
 function renderWorks(){
   document.getElementById("worksGrid").innerHTML = works.map(w=>`
-    <div class="card">
-      <img src="${w.img}" alt="${w.title}">
-      <div class="card-body">
-        <h3>${w.title}</h3>
-        <p>${w.desc}</p>
-      </div>
+    <div class="card"><img src="${w.img}" alt="${w.title}">
+      <div class="card-body"><h3>${w.title}</h3><p>${w.desc}</p></div>
     </div>`).join("");
 }
 
 function renderVacancies(){
   document.getElementById("vacanciesGrid").innerHTML = vacancies.map(v=>`
-    <div class="card">
-      <div class="card-body">
-        <h3>${v.title}</h3>
-        <p class="salary">${v.salary}</p>
-        <p>${v.req || "Подробности при собеседовании"}</p>
-        <button class="btn" onclick="alert('Резюме отправлено на hr@strobistro.ru')">Откликнуться</button>
-      </div>
-    </div>`).join("");
+    <div class="card"><div class="card-body">
+      <h3>${v.title}</h3><p class="salary">${v.salary}</p>
+      <p>${v.req || "Подробности при собеседовании"}</p>
+      <button class="btn" onclick="alert('Резюме отправлено')">Откликнуться</button>
+    </div></div>`).join("");
 }
 
-function renderTableWorks(){
-  const t = document.getElementById("worksTable");
-  t.innerHTML = "<tr><th>Название</th><th>Удалить</th></tr>";
-  works.forEach((w,i)=> t.innerHTML += `<tr><td>${w.title}</td><td><button class="del" onclick="delWork(${i})">Удалить</button></td></tr>`);
+function renderTables(){
+  document.getElementById("worksTable").innerHTML = "<tr><th>Название</th><th>Удалить</th></tr>" +
+    works.map((w,i)=>`<tr><td>${w.title}</td><td><button class="del" onclick="delWork('${w.id}')">Удалить</button></td></tr>`).join("");
+  document.getElementById("vacTable").innerHTML = "<tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr>" +
+    vacancies.map((v,i)=>`<tr><td>${v.title}</td><td>${v.salary}</td><td><button class="del" onclick="delVac('${v.id}')">Удалить</button></td></tr>`).join("");
 }
 
-function renderTableVac(){
-  const t = document.getElementById("vacTable");
-  t.innerHTML = "<tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr>";
-  vacancies.forEach((v,i)=> t.innerHTML += `<tr><td>${v.title}</td><td>${v.salary}</td><td><button class="del" onclick="delVac(${i})">Удалить</button></td></tr>`);
-}
+async function delWork(id){ if(confirm("Удалить?")){ await db.collection("works").doc(id).delete(); loadData(); } }
+async function delVac(id){ if(confirm("Удалить?")){ await db.collection("vacancies").doc(id).delete(); loadData(); } }
 
-function loadData(){ renderWorks(); renderVacancies(); renderTableWorks(); renderTableVac(); }
-
-renderWorks(); renderVacancies();
+// Загрузка при старте
+loadData();
 </script>
 </body>
 </html>
