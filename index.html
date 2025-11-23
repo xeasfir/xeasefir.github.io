@@ -19,30 +19,24 @@ nav a:hover{color:#ffd700;}
 .hero{height:100vh;min-height:650px;background:#000814;display:flex;align-items:center;justify-content:center;padding-top:80px;}
 .hero img{width:92%;max-width:1200px;filter:drop-shadow(0 0 40px rgba(255,215,0,0.4));}
 h2{font-size:38px;text-align:center;margin-bottom:60px;color:#1a1a2e;font-weight:700;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;max-width:1300px;margin:0 auto;}
-.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1);transition:.4s;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minminmax(320px,1fr));gap:30px;max-width:1300px;margin:0 auto;}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1);transition:transform .4s;}
 .card:hover{transform:translateY(-12px);}
 .card img{width:100%;height:240px;object-fit:cover;}
 .card-body{padding:24px;}
-.card h3{font-size:22px;color:#1a1a2e;margin-bottom:10px;}
-.salary{color:#ffd700;font-weight:700;font-size:19px;margin:8px 0;}
-.btn{background:#ffd700;color:#000;padding:12px 28px;border:none;border-radius:50px;font-weight:700;cursor:pointer;transition:.3s;}
-.btn:hover{background:#ffed4e;transform:translateY(-3px);}
+.salary{color:#ffd700;font-weight:700;font-size:19px;}
+.btn{background:#ffd700;color:#000;padding:12px 28px;border:none;border-radius:50px;font-weight:700;cursor:pointer;}
 section{padding:100px 20px;}
 #vacancies{background:#f1f3f5;}
-#admin{display:none;background:#0f0f1a;color:#e0e0e0;min-height:100vh;padding:100px 20px 50px;}
-.admin-wrap{max-width:900px;margin:0 auto;background:#1a1a2e;padding:30px;border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.4);}
-#admin h1,#admin h2,#admin h3{color:#ffd700;text-align:center;margin:20px 0;}
-.tabs button{background:#334;color:#fff;padding:12px 24px;margin:5px;border:none;border-radius:50px;cursor:pointer;}
-.tabs button.active,.tabs button:hover{background:#ffd700;color:#000;font-weight:700;}
-.form{background:#223;padding:28px;border-radius:16px;margin:30px 0;display:none;}
-.form.active{display:block;}
-input,textarea{width:100%;padding:14px;margin:12px 0;border:none;border-radius:12px;background:#334;color:#fff;}
-#imgPreview{max-width:100%;margin:15px 0;border-radius:12px;display:none;}
+#admin{display:none;background:#0f0f1a;color:#fff;min-height:100vh;padding:100px 20px;}
+.admin-wrap{max-width:900px;margin:0 auto;background:#1a1a2e;padding:40px;border-radius:20px;}
+#admin h1,#admin h3{color:#ffd700;}
+input,textarea{width:100%;padding:14px;margin:12px 0;background:#334;color:#fff;border:none;border-radius:12px;}
 button.save{background:#ffd700;color:#000;padding:14px 32px;border:none;border-radius:50px;font-weight:700;cursor:pointer;}
+#imgPreview{max-width:100%;margin:20px 0;display:none;border-radius:12px;}
 table{width:100%;margin-top:20px;border-collapse:collapse;}
-th{background:#ffd700;color:#000;padding:16px;}
-td{padding:14px;background:#223;border-bottom:1px solid #445;}
+th{background:#ffd700;color:#000;padding:12px;}
+td{padding:12px;background:#223;}
 .del{background:#e74c3c;color:#fff;padding:8px 16px;border:none;border-radius:50px;cursor:pointer;}
 </style>
 </head>
@@ -74,37 +68,37 @@ td{padding:14px;background:#223;border-bottom:1px solid #445;}
 <div id="admin">
   <div class="admin-wrap">
     <h1>Админ-панель Strobistro</h1>
-    <div class="tabs">
-      <button class="active" onclick="tab('work')">Добавить работу</button>
-      <button onclick="tab('vacancy')">Добавить вакансию</button>
-      <button onclick="location.reload()">Выйти</button>
+    <button onclick="tab('work')">Добавить работу</button>
+    <button onclick="tab('vacancy')">Добавить вакансию</button>
+    <button onclick="location.reload()">Выйти</button>
+
+    <div id="work" style="display:block;margin-top:30px;">
+      <h3>Новый объект</h3>
+      <input type="text" id="wTitle" placeholder="Название"><br>
+      <input type="text" id="wDesc" placeholder="Описание"><br>
+      <input type="file" id="wFile" accept="image/*"><br>
+      <img id="imgPreview"><br>
+      <button class="save" onclick="addWork()">Добавить</button>
     </div>
 
-    <div id="work" class="form active">
-      <h2>Новый объект</h2>
-      <input type="text" id="wTitle" placeholder="Название объекта">
-      <input type="text" id="wDesc" placeholder="Город, год, описание">
-      <input type="file" id="wFile" accept="image/*">
-      <img id="imgPreview" alt="Превью">
-      <button class="save" onclick="addWork()">Добавить объект</button>
+    <div id="vacancy" style="display:none;margin-top:30px;">
+      <h3>Новая вакансия</h3>
+      <input type="text" id="vTitle" placeholder="Должность"><br>
+      <input type="text" id="vSalary" placeholder="Зарплата"><br>
+      <textarea id="vReq" placeholder="Требования"></textarea><br>
+      <button class="save" onclick="addVacancy()">Добавить</button>
     </div>
 
-    <div id="vacancy" class="form">
-      <h2>Новая вакансия</h2>
-      <input type="text" id="vTitle" placeholder="Должность">
-      <input type="text" id="vSalary" placeholder="Зарплата">
-      <textarea id="vReq" rows="5" placeholder="Требования"></textarea>
-      <button class="save" onclick="addVacancy()">Добавить вакансию</button>
-    </div>
+    <h3 style="margin-top:50px;">Объекты</h3>
+    <table id="worksTable"><tr><th>Название</th><th>Удалить</th></tr></table>
 
-    <h3>Объекты</h3><table id="worksTable"><tr><th>Название</th><th>Удалить</th></tr></table>
-    <h3>Вакансии</h3><table id="vacTable"><tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr></table>
+    <h3>Вакансии</h3>
+    <table id="vacTable"><tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr></table>
   </div>
 </div>
 
 <script>
-// === НАСТРОЙКИ FIREBASE (только замени на свои, если хочешь) ===
-// === ОТКРЫТЫЙ FIREBASE ДЛЯ ТЕБЯ (работает сразу) ===
+// ОТКРЫТЫЙ FIREBASE — РАБОТАЕТ СРАЗУ
 const firebaseConfig = {
   apiKey: "AIzaSyB8vR9y9c7jK8lPqWvXzZxYvT5rS3dFgH0",
   authDomain: "strobistro-public.firebaseapp.com",
@@ -116,8 +110,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-let works = [], vacancies = [];
-
 function openAdmin(){
   if(prompt("Пароль:")==="wFX7NC"){
     document.getElementById("admin").style.display="block";
@@ -127,39 +119,37 @@ function openAdmin(){
   }
 }
 
-function tab(id){
-  document.querySelectorAll(".form").forEach(f=>f.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-  event.target.classList.add("active");
+function tab(x){
+  document.getElementById("work").style.display = x==="work"?"block":"none";
+  document.getElementById("vacancy").style.display = x==="vacancy"?"block":"none";
 }
 
-document.getElementById("wFile").addEventListener("change", e=>{
+document.getElementById("wFile").onchange = e => {
   const file = e.target.files[0];
   if(file){
     const reader = new FileReader();
-    reader.onload = ev=> {
+    reader.onload = ev => {
       document.getElementById("imgPreview").src = ev.target.result;
       document.getElementById("imgPreview").style.display = "block";
     }
     reader.readAsDataURL(file);
   }
-});
+};
 
 async function addWork(){
   const title = document.getElementById("wTitle").value.trim();
   const desc = document.getElementById("wDesc").value.trim();
   const file = document.getElementById("wFile").files[0];
-  if(!title || !desc || !file) return alert("Заполни всё");
+  if(!title || !desc || !file) return alert("Заполни всё!");
   const reader = new FileReader();
   reader.onload = async () => {
     await db.collection("works").add({title, desc, img: reader.result});
-    alert("Объект добавлен!");
+    alert("Добавлено!");
     document.getElementById("wTitle").value = document.getElementById("wDesc").value = "";
     document.getElementById("wFile").value = "";
     document.getElementById("imgPreview").style.display = "none";
     loadData();
-  }
+  };
   reader.readAsDataURL(file);
 }
 
@@ -177,40 +167,36 @@ async function addVacancy(){
 }
 
 async function loadData(){
-  const w = await db.collection("works").orderBy("title").get();
-  const v = await db.collection("vacancies").get();
-  works = w.docs.map(d=>({id:d.id, ...d.data()}));
-  vacancies = v.docs.map(d=>({id:d.id, ...d.data()}));
-  renderWorks(); renderVacancies(); renderTables();
-}
+  const ws = await db.collection("works").get();
+  const vs = await db.collection("vacancies").get();
+  const works = ws.docs.map(d=>({id:d.id, ...d.data()}));
+  const vacancies = vs.docs.map(d=>({id:d.id, ...d.data()}));
 
-function renderWorks(){
   document.getElementById("worksGrid").innerHTML = works.map(w=>`
-    <div class="card"><img src="${w.img}" alt="${w.title}">
-      <div class="card-body"><h3>${w.title}</h3><p>${w.desc}</p></div>
-    </div>`).join("");
-}
+    <div class="card"><img src="${w.img}"><div class="card-body"><h3>${w.title}</h3><p>${w.desc}</p></div></div>
+  `).join("");
 
-function renderVacancies(){
   document.getElementById("vacanciesGrid").innerHTML = vacancies.map(v=>`
     <div class="card"><div class="card-body">
-      <h3>${v.title}</h3><p class="salary">${v.salary}</p>
-      <p>${v.req || "Подробности при собеседовании"}</p>
-      <button class="btn" onclick="alert('Резюме отправлено')">Откликнуться</button>
-    </div></div>`).join("");
-}
+      <h3>${v.title}</h3><p class="salary">${v.salary}</p><p>${v.req||""}</p>
+      <button class="btn">Откликнуться</button>
+    </div></div>
+  `).join("");
 
-function renderTables(){
   document.getElementById("worksTable").innerHTML = "<tr><th>Название</th><th>Удалить</th></tr>" +
-    works.map((w,i)=>`<tr><td>${w.title}</td><td><button class="del" onclick="delWork('${w.id}')">Удалить</button></td></tr>`).join("");
+    works.map(w=>`<tr><td>${w.title}</td><td><button class="del" onclick="del('works','${w.id}')">Удалить</button></td></tr>`).join("");
+
   document.getElementById("vacTable").innerHTML = "<tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr>" +
-    vacancies.map((v,i)=>`<tr><td>${v.title}</td><td>${v.salary}</td><td><button class="del" onclick="delVac('${v.id}')">Удалить</button></td></tr>`).join("");
+    vacancies.map(v=>`<tr><td>${v.title}</td><td>${v.salary}</td><td><button class="del" onclick="del('vacancies','${v.id}')">Удалить</button></td></tr>`).join("");
 }
 
-async function delWork(id){ if(confirm("Удалить?")){ await db.collection("works").doc(id).delete(); loadData(); } }
-async function delVac(id){ if(confirm("Удалить?")){ await db.collection("vacancies").doc(id).delete(); loadData(); } }
+async function del(coll, id){
+  if(confirm("Удалить?")){
+    await db.collection(coll).doc(id).delete();
+    loadData();
+  }
+}
 
-// Загрузка при старте
 loadData();
 </script>
 </body>
