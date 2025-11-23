@@ -14,26 +14,19 @@ header{
 }
 .container{max-width:1300px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;}
 .logo{display:flex;align-items:center;gap:12px;}
-.logo img{height:48px;}
+.logo img{height:56px;}                  /* minilogo в шапке */
 .logo span{font-size:28px;font-weight:800;color:#ffd700;letter-spacing:1px;}
 
 nav a{color:#ccc;margin:0 20px;text-decoration:none;font-weight:600;transition:.3s;}
 nav a:hover{color:#ffd700;}
 
-/* Hero — теперь с твоим новым лого вместо старой фотки */
+/* Hero — большой логотип */
 .hero{
-    height:100vh;min-height:650px;
-    background:#000814;
-    display:flex;align-items:center;justify-content:center;
-    padding-top:80px;
+    height:100vh;min-height:650px;background:#000814;
+    display:flex;align-items:center;justify-content:center;padding-top:80px;
 }
-.hero img{
-    width:92%;
-    max-width:1200px;
-    filter:drop-shadow(0 0 40px rgba(255,215,0,0.4));
-}
+.hero img{width:92%;max-width:1200px;filter:drop-shadow(0 0 40px rgba(255,215,0,0.4));}
 
-/* остальное без изменений */
 h2{font-size:38px;text-align:center;margin-bottom:60px;color:#1a1a2e;font-weight:700;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px;max-width:1300px;margin:0 auto;}
 .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.1);transition:.4s;}
@@ -47,9 +40,27 @@ h2{font-size:38px;text-align:center;margin-bottom:60px;color:#1a1a2e;font-weight
 section{padding:100px 20px;}
 #vacancies{background:#f1f3f5;}
 
+/* Админка — стили без изменений */
+#admin{display:none;background:#0f0f1a;color:#e0e0e0;min-height:100vh;padding:100px 20px 50px;}
+.admin-wrap{max-width:900px;margin:0 auto;background:#1a1a2e;padding:30px;border-radius:20px;box-shadow:0 15px 40px rgba(0,0,0,0.4);}
+#admin h1{font-size:32px;text-align:center;color:#ffd700;margin-bottom:30px;}
+.tabs{text-align:center;margin-bottom:30px;}
+.tabs button{background:#334;color:#fff;padding:12px 24px;margin:5px;border:none;border-radius:50px;font-size:16px;cursor:pointer;transition:.3s;}
+.tabs button.active,.tabs button:hover{background:#ffd700;color:#000;font-weight:700;}
+.form{background:#223;padding:28px;border-radius:16px;margin-bottom:30px;display:none;}
+.form.active{display:block;}
+.form h2{color:#ffd700;margin-bottom:20px;font-size:24px;}
+input,textarea,select{width:100%;padding:14px;margin:12px 0;border:none;border-radius:12px;background:#334;color:#fff;font-size:16px;}
+#imgPreview{max-width:100%;margin:15px 0;border-radius:12px;display:none;box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+button.save{background:#ffd700;color:#000;padding:14px 32px;border:none;border-radius:50px;font-weight:700;cursor:pointer;margin-top:10px;}
+table{width:100%;margin-top:20px;border-collapse:collapse;background:#223;border-radius:12px;overflow:hidden;}
+th{background:#ffd700;color:#000;padding:16px;font-weight:600;}
+td{padding:14px;background:#223;border-bottom:1px solid #445;}
+.del{background:#e74c3c;color:#fff;padding:8px 16px;border:none;border-radius:50px;cursor:pointer;font-weight:600;}
+
 @media(max-width:768px){
+    .logo img{height:46px;}
     .hero img{width:95%;}
-    .logo img{height:40px;}
 }
 </style>
 </head>
@@ -58,7 +69,7 @@ section{padding:100px 20px;}
 <header>
   <div class="container">
     <div class="logo">
-      <img src="logo.jpg" alt="Strobistro">
+      <img src="minilogo.jpg" alt="Strobistro">
       <span>Strobistro</span>
     </div>
     <nav>
@@ -84,13 +95,7 @@ section{padding:100px 20px;}
   </section>
 </main>
 
-  <section id="vacancies" style="background:#f1f3f5;">
-    <h2>Открытые вакансии</h2>
-    <div class="grid" id="vacanciesGrid"></div>
-  </section>
-</main>
-
-<!-- АДМИН-ПАНЕЛЬ -->
+<!-- АДМИН-ПАНЕЛЬ (всё как было) -->
 <div id="admin">
   <div class="admin-wrap">
     <h1>Админ-панель Strobistro</h1>
@@ -120,7 +125,6 @@ section{padding:100px 20px;}
     <h2 style="color:#ffd700;margin:40px 0 20px;">Управление</h2>
     <h3 style="color:#ffd700;">Объекты</h3>
     <table id="worksTable"><tr><th>Название</th><th>Удалить</th></tr></table>
-
     <h3 style="color:#ffd700;margin-top:30px;">Вакансии</h3>
     <table id="vacTable"><tr><th>Должность</th><th>Зарплата</th><th>Удалить</th></tr></table>
   </div>
@@ -128,10 +132,11 @@ section{padding:100px 20px;}
 
 <footer style="background:#1a1a2e;color:#aaa;text-align:center;padding:40px 20px;margin-top:80px;">
   <div class="container">
-    <p>© 2025 Strobistro | Контакты +79490359707 Миранда Владимир +79493263607 Кацай Владимирович </p>
+    <p>© 2025 Strobistro | Контакты +79490359707 Миранда Владимир +79493263607 Кацай Владимирович</p>
   </div>
 </footer>
 
+<!-- Скрипты без изменений -->
 <script>
 function openAdmin(){
   if(prompt("Пароль администратора:")==="wFX7NC"){
@@ -142,26 +147,22 @@ function openAdmin(){
     loadData();
   } else alert("Неверный пароль");
 }
-
 function tab(id){
   document.querySelectorAll(".form").forEach(f=>f.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
   event.target.classList.add("active");
 }
-
 let works = JSON.parse(localStorage.getItem("strobistro_works")) || [];
 let vacancies = JSON.parse(localStorage.getItem("strobistro_vacancies")) || [];
 
-// Превью фото
 document.getElementById("wFile").addEventListener("change", function(e){
   const file = e.target.files[0];
   if(file){
     const reader = new FileReader();
     reader.onload = function(e){
-      const prev = document.getElementById("imgPreview");
-      prev.src = e.target.result;
-      prev.style.display = "block";
+      document.getElementById("imgPreview").src = e.target.result;
+      document.getElementById("imgPreview").style.display = "block";
     }
     reader.readAsDataURL(file);
   }
@@ -172,11 +173,9 @@ function addWork(){
   const desc = document.getElementById("wDesc").value.trim();
   const fileInput = document.getElementById("wFile");
   if(!title || !desc || !fileInput.files[0]) return alert("Заполните все поля и выберите фото");
-
   const reader = new FileReader();
   reader.onload = function(e){
-    const work = {title, desc, img: e.target.result};
-    works.push(work);
+    works.push({title, desc, img: e.target.result});
     localStorage.setItem("strobistro_works", JSON.stringify(works));
     renderWorks(); renderTableWorks();
     document.getElementById("wTitle").value = document.getElementById("wDesc").value = "";
@@ -240,7 +239,6 @@ function renderTableVac(){
 
 function loadData(){ renderWorks(); renderVacancies(); renderTableWorks(); renderTableVac(); }
 
-// Запуск
 renderWorks(); renderVacancies();
 </script>
 </body>
